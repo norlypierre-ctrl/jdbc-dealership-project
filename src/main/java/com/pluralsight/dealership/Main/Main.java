@@ -16,14 +16,26 @@ import java.util.UUID;
 
 public class Main {
     public static void main(String[] args) {
+
+        if (args.length != 2) {
+            System.out.println(
+                    "Application needs two arguments to run: " + "java com.hca.jdbc.UsingDriverManager <username> " +
+                            "<password>");
+            System.exit(1);
+        }
+
         String username = args[0];
         String password = args[1];
 
         BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setUrl("jdbc:mysql://localhost:3306/car_dealership");
-
+        dataSource.setUrl(
+                "jdbc:mysql://localhost:3306/car%20dealership" +
+                        "?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true"
+        );
         dataSource.setUsername(username);
         dataSource.setPassword(password);
+
+        System.out.println("DataSource Configured Successfully");
 
         // Create instances of required DAO classes
         VehicleDao vehicleDao = new VehicleDao(dataSource);
